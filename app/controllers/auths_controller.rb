@@ -6,7 +6,7 @@ class AuthsController < ApplicationController
         if user && user.authenticate(params[:password])
             payload = {user_id: user.id}
             token = encode_token(payload)
-            render json: {user: user, jwt: token, mentees: Mentee.all.select{|mentee| mentee.user_id == payload["user_id"]}}
+            render json: {user: user, jwt: token, mentees: Mentee.all.select{|mentee| mentee.user_id == user.id}}
         else 
             render json: {status: 401, errors: ["Log in failed! Username or password invalid"]}
         end 
